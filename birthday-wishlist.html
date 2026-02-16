@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wishlist ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .add-item-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .add-item-form input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .add-item-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-item-form select {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .add-item-form button {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-item-form button:hover {
+            background: #5568d3;
+        }
+
+        .tier-section {
+            margin-bottom: 30px;
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+        }
+
+        .tier-really-want .tier-header {
+            border-color: #f43f5e;
+        }
+
+        .tier-want .tier-header {
+            border-color: #8b5cf6;
+        }
+
+        .tier-backup .tier-header {
+            border-color: #06b6d4;
+        }
+
+        .tier-icon {
+            font-size: 1.5em;
+        }
+
+        .tier-title {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .tier-count {
+            margin-left: auto;
+            background: rgba(0,0,0,0.05);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .wishlist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .wishlist-item {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .wishlist-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 1.05em;
+            word-break: break-word;
+        }
+
+        .item-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .item-link:hover {
+            color: #5568d3;
+            text-decoration: underline;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            border-radius: 12px;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .add-item-form {
+                flex-direction: column;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎂 Birthday Wishlist ✨</h1>
+            <p>Add your wishes and I'll make them come true! 💝</p>
+        </div>
+
+        <div class="card">
+            <div class="add-item-form">
+                <select id="inputTypeSelect" onchange="updateInputPlaceholder()">
+                    <option value="description">📝 Description</option>
+                    <option value="link">🔗 Link</option>
+                </select>
+                <input 
+                    type="text" 
+                    id="itemInput" 
+                    placeholder="What do you wish for? 🎁"
+                    maxlength="500"
+                >
+                <select id="tierSelect">
+                    <option value="really-want">💖 Really Want</option>
+                    <option value="want">💜 Want</option>
+                    <option value="backup">💙 Backup Option</option>
+                </select>
+                <button onclick="addItem()">Add</button>
+            </div>
+
+            <div class="tier-section tier-really-want">
+                <div class="tier-header">
+                    <span class="tier-icon">💖</span>
+                    <span class="tier-title">Really Want</span>
+                    <span class="tier-count" id="count-really-want">0 items</span>
+                </div>
+                <div class="wishlist-items" id="items-really-want">
+                    <div class="empty-state">No items yet - add your must-haves!</div>
+                </div>
+            </div>
+
+            <div class="tier-section tier-want">
+                <div class="tier-header">
+                    <span class="tier-icon">💜</span>
+                    <span class="tier-title">Want</span>
+                    <span class="tier-count" id="count-want">0 items</span>
+                </div>
+                <div class="wishlist-items" id="items-want">
+                    <div class="empty-state">No items yet - add what you'd like!</div>
+                </div>
+            </div>
+
+            <div class="tier-section tier-backup">
+                <div class="tier-header">
+                    <span class="tier-icon">💙</span>
+                    <span class="tier-title">Backup Options</span>
+                    <span class="tier-count" id="count-backup">0 items</span>
+                </div>
+                <div class="wishlist-items" id="items-backup">
+                    <div class="empty-state">No items yet - add backup wishes!</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-items">0</div>
+                    <div class="stat-label">Total Wishes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="top-priority">0</div>
+                    <div class="stat-label">Top Priority</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let wishlist = {
+            'really-want': [],
+            'want': [],
+            'backup': []
+        };
+
+        // Load wishlist from storage on page load
+        async function loadWishlist() {
+            try {
+                const result = await window.storage.get('birthday-wishlist', false);
+                if (result && result.value) {
+                    wishlist = JSON.parse(result.value);
+                    renderAll();
+                }
+            } catch (error) {
+                console.log('No saved wishlist found, starting fresh');
+            }
+        }
+
+        // Save wishlist to storage
+        async function saveWishlist() {
+            try {
+                await window.storage.set('birthday-wishlist', JSON.stringify(wishlist), false);
+            } catch (error) {
+                console.error('Error saving wishlist:', error);
+            }
+        }
+
+        function updateInputPlaceholder() {
+            const inputType = document.getElementById('inputTypeSelect').value;
+            const input = document.getElementById('itemInput');
+            
+            if (inputType === 'link') {
+                input.placeholder = 'Paste the link here (e.g., https://www.amazon.com/...) 🔗';
+            } else {
+                input.placeholder = 'What do you wish for? 🎁';
+            }
+        }
+
+        function addItem() {
+            const input = document.getElementById('itemInput');
+            const tierSelect = document.getElementById('tierSelect');
+            const inputTypeSelect = document.getElementById('inputTypeSelect');
+            const itemText = input.value.trim();
+            const tier = tierSelect.value;
+            const inputType = inputTypeSelect.value;
+
+            if (itemText === '') {
+                alert('Please enter a wish! 💝');
+                return;
+            }
+
+            // Basic URL validation if type is link
+            if (inputType === 'link' && !itemText.startsWith('http://') && !itemText.startsWith('https://')) {
+                if (confirm('This doesn\'t look like a full link. Add it anyway?')) {
+                    // Continue
+                } else {
+                    return;
+                }
+            }
+
+            const item = {
+                id: Date.now(),
+                text: itemText,
+                tier: tier,
+                type: inputType
+            };
+
+            wishlist[tier].push(item);
+            input.value = '';
+            
+            renderTier(tier);
+            updateStats();
+            saveWishlist();
+        }
+
+        function deleteItem(tier, id) {
+            wishlist[tier] = wishlist[tier].filter(item => item.id !== id);
+            renderTier(tier);
+            updateStats();
+            saveWishlist();
+        }
+
+        function renderTier(tier) {
+            const container = document.getElementById(`items-${tier}`);
+            const items = wishlist[tier];
+
+            if (items.length === 0) {
+                const emptyMessages = {
+                    'really-want': 'No items yet - add your must-haves!',
+                    'want': 'No items yet - add what you\'d like!',
+                    'backup': 'No items yet - add backup wishes!'
+                };
+                container.innerHTML = `<div class="empty-state">${emptyMessages[tier]}</div>`;
+            } else {
+                container.innerHTML = items.map(item => {
+                    let itemContent;
+                    if (item.type === 'link') {
+                        itemContent = `<a href="${item.text}" target="_blank" rel="noopener noreferrer" class="item-link">🔗 ${item.text}</a>`;
+                    } else {
+                        itemContent = `<span>${item.text}</span>`;
+                    }
+                    
+                    return `
+                        <div class="wishlist-item">
+                            <div class="item-text">${itemContent}</div>
+                            <div class="item-actions">
+                                <button class="btn-delete" onclick="deleteItem('${tier}', ${item.id})">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Update count
+            const count = items.length;
+            document.getElementById(`count-${tier}`).textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+        }
+
+        function renderAll() {
+            renderTier('really-want');
+            renderTier('want');
+            renderTier('backup');
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = wishlist['really-want'].length + wishlist['want'].length + wishlist['backup'].length;
+            const topPriority = wishlist['really-want'].length;
+
+            document.getElementById('total-items').textContent = total;
+            document.getElementById('top-priority').textContent = topPriority;
+        }
+
+        // Allow Enter key to add items
+        document.getElementById('itemInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addItem();
+            }
+        });
+
+        // Load wishlist when page loads
+        loadWishlist();
+    </script>
+</body>
+</html>
